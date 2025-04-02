@@ -44,7 +44,7 @@ export const WorkoutList: React.FC<Props> = ({
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statLabel}>Weight</Text>
-              <Text style={styles.statValue}>{item.weight} lbs</Text>
+              <Text style={styles.statValue}>{item.weight} Kg</Text>
             </View>
             <View style={styles.statItem}>
               <Text style={styles.statLabel}>Date</Text>
@@ -78,6 +78,7 @@ export const WorkoutList: React.FC<Props> = ({
       renderItem={renderItem}
       keyExtractor={(item) => item.id?.toString() || ""}
       style={styles.list}
+      contentContainerStyle={styles.listContent}
     />
   );
 };
@@ -86,6 +87,9 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     paddingTop: 16,
+  },
+  listContent: {
+    paddingHorizontal: 16, // Add horizontal padding
   },
   item: {
     padding: 16,
@@ -116,7 +120,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   date: {
-    fontSize: 16,
+    fontSize: 13,
     fontWeight: "600",
     marginBottom: 4,
   },
@@ -133,7 +137,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   statValue: {
-    fontSize: 16,
+    fontSize: 13,
     fontWeight: "600",
   },
   actionsContainer: {

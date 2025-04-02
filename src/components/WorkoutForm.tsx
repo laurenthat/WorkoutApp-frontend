@@ -39,21 +39,21 @@ export const WorkoutForm: React.FC<Props> = ({ onSubmit }) => {
       <TextInput
         style={styles.input}
         placeholder="Sets"
-        value={workout.sets.toString()}
+        value={workout.sets === 0 ? "" : workout.sets.toString()}
         onChangeText={(text) => setWorkout({ ...workout, sets: Number(text) })}
         keyboardType="numeric"
       />
       <TextInput
         style={styles.input}
         placeholder="Reps"
-        value={workout.reps.toString()}
+        value={workout.reps === 0 ? "" : workout.reps.toString()}
         onChangeText={(text) => setWorkout({ ...workout, reps: Number(text) })}
         keyboardType="numeric"
       />
       <TextInput
         style={styles.input}
-        placeholder="Weight (lbs)"
-        value={workout.weight.toString()}
+        placeholder="Weight (kg)"
+        value={workout.weight === 0 ? "" : workout.weight.toString()}
         onChangeText={(text) =>
           setWorkout({ ...workout, weight: Number(text) })
         }
