@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import {
   View,
+  Text,
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
@@ -111,6 +112,7 @@ export const WorkoutsScreen = () => {
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.content}>
+          <Text style={styles.title}>Workouts</Text>
           <WorkoutList
             workouts={workouts}
             onModify={handleEditWorkout}
@@ -154,6 +156,13 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     paddingTop: 20,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: "bold",
+    marginBottom: 16,
+    paddingHorizontal: 16,
+    color: "#1a1a1a",
   },
   content: {
     flex: 1,

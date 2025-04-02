@@ -16,6 +16,11 @@ export const workoutApi = {
     return response.data;
   },
 
+  getCount: async () => {
+    const response = await api.get<Workout[]>("/workouts");
+    return response.data.length;
+  },
+
   create: async (workout: Omit<Workout, "id">) => {
     const response = await api.post<Workout>("/workouts", workout);
     return response.data;
