@@ -21,6 +21,11 @@ export const workoutApi = {
     return response.data;
   },
 
+  update: async (id: number, workout: Omit<Workout, "id">) => {
+    const response = await api.put<Workout>(`/workouts/${id}`, workout);
+    return response.data;
+  },
+
   delete: async (id: number) => {
     await api.delete(`/workouts/${id}`);
   },

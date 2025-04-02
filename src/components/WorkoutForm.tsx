@@ -10,14 +10,25 @@ import { Workout } from "../types/workout";
 
 interface Props {
   onSubmit: (workout: Workout) => void;
+  initialWorkout?: Workout | null;
+  onCancel?: () => void;
 }
 
-export const WorkoutForm: React.FC<Props> = ({ onSubmit }) => {
-  const [workout, setWorkout] = useState<Workout>({
-    exercise: "",
-    sets: 0,
-    reps: 0,
-    weight: 0,
+export const WorkoutForm: React.FC<Props> = ({
+  onSubmit,
+  initialWorkout = null,
+  onCancel,
+}) => {
+  const [workout, setWorkout] = useState<Workout>(() => {
+    if (initialWorkout) {
+      return { ...initialWorkout };
+    }
+    return {
+      exercise: "",
+      sets: 0,
+      reps: 0,
+      weight: 0,
+    };
   });
 
   const isFormValid = useMemo(() => {
@@ -36,6 +47,13 @@ export const WorkoutForm: React.FC<Props> = ({ onSubmit }) => {
       setWorkout({ exercise: "", sets: 0, reps: 0, weight: 0 });
     }
   };
+
+  // Using useEffect to show the workout data in the bottom sheet when editing
+  React.useEffect(() => {
+    if (initialWorkout) {
+      setWorkout(initialWorkout);
+    }
+  }, [initialWorkout]);
 
   return (
     <View style={styles.container}>
@@ -68,13 +86,40 @@ export const WorkoutForm: React.FC<Props> = ({ onSubmit }) => {
         }
         keyboardType="numeric"
       />
-      <TouchableOpacity
-        style={[styles.button, !isFormValid && styles.buttonDisabled]}
-        onPress={handleSubmit}
-        disabled={!isFormValid}
-      >
-        <Text style={styles.buttonText}>Add Workout</Text>
-      </TouchableOpacity>
+
+      {initialWorkout ? (
+        // If editing, show both Update and Cancel buttons
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={[styles.button, styles.cancelButton]}
+            onPress={onCancel}
+          >
+            <Text style={[styles.buttonText, styles.cancelButtonText]}>
+              Cancel
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              !isFormValid && styles.buttonDisabled,
+              styles.buttonWithCancel,
+            ]}
+            onPress={handleSubmit}
+            disabled={!isFormValid}
+          >
+            <Text style={styles.buttonText}>Update</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        // If not editing, show only the Add Workout button
+        <TouchableOpacity
+          style={[styles.button, !isFormValid && styles.buttonDisabled]}
+          onPress={handleSubmit}
+          disabled={!isFormValid}
+        >
+          <Text style={styles.buttonText}>Add Workout</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -104,5 +149,22 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     fontSize: 16,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    gap: 10,
+    marginTop: 10,
+  },
+  buttonWithCancel: {
+    flex: 1,
+  },
+  cancelButton: {
+    flex: 1,
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#007AFF",
+  },
+  cancelButtonText: {
+    color: "#007AFF",
   },
 });

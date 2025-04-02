@@ -10,13 +10,10 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
   Keyboard,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { workoutApi } from "../services/workoutService";
 import { Workout } from "../types/workout";
 import { WorkoutList } from "../components/WorkoutList";
@@ -24,6 +21,7 @@ import { WorkoutForm } from "../components/WorkoutForm";
 
 export const WorkoutsScreen = () => {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
+  const [editingWorkout, setEditingWorkout] = useState<Workout | null>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ["50%", "75%"], []);
 
@@ -67,6 +65,25 @@ export const WorkoutsScreen = () => {
     }
   };
 
+  const handleEditWorkout = (workout: Workout) => {
+    setEditingWorkout(workout);
+    bottomSheetRef.current?.snapToIndex(0);
+  };
+
+  const handleUpdateWorkout = async (workout: Workout) => {
+    try {
+      if (editingWorkout?.id) {
+        await workoutApi.update(editingWorkout.id, workout);
+        loadWorkouts();
+        setEditingWorkout(null);
+        bottomSheetRef.current?.close();
+        Keyboard.dismiss();
+      }
+    } catch (error) {
+      console.error("Error updating workout:", error);
+    }
+  };
+
   const handleDeleteWorkout = async (id: number) => {
     try {
       await workoutApi.delete(id);
@@ -81,14 +98,24 @@ export const WorkoutsScreen = () => {
   }, []);
 
   const openBottomSheet = useCallback(() => {
+    setEditingWorkout(null);
     bottomSheetRef.current?.snapToIndex(0);
+  }, []);
+
+  const closeBottomSheet = useCallback(() => {
+    bottomSheetRef.current?.close();
+    setEditingWorkout(null);
   }, []);
 
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.content}>
-          <WorkoutList workouts={workouts} onDelete={handleDeleteWorkout} />
+          <WorkoutList
+            workouts={workouts}
+            onModify={handleEditWorkout}
+            onDelete={handleDeleteWorkout}
+          />
           <TouchableOpacity style={styles.fab} onPress={openBottomSheet}>
             <FontAwesome name="plus" size={24} color="white" />
           </TouchableOpacity>
@@ -103,7 +130,13 @@ export const WorkoutsScreen = () => {
             handleIndicatorStyle={styles.bottomSheetIndicator}
           >
             <BottomSheetView style={styles.bottomSheetContent}>
-              <WorkoutForm onSubmit={handleAddWorkout} />
+              <WorkoutForm
+                onSubmit={
+                  editingWorkout ? handleUpdateWorkout : handleAddWorkout
+                }
+                initialWorkout={editingWorkout}
+                onCancel={closeBottomSheet}
+              />
             </BottomSheetView>
           </BottomSheet>
         </View>
