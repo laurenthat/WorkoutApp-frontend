@@ -1,55 +1,39 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { WorkoutForm } from "../components/WorkoutForm";
-import { WorkoutList } from "../components/WorkoutList";
-import { workoutService } from "../services/workoutService";
-import { Workout } from "../types/workout";
+import React from "react";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 
 export const HomeScreen = () => {
-  const [workouts, setWorkouts] = useState<Workout[]>([]);
-
-  useEffect(() => {
-    loadWorkouts();
-  }, []);
-
-  const loadWorkouts = async () => {
-    try {
-      const data = await workoutService.getAllWorkouts();
-      setWorkouts(data);
-    } catch (error) {
-      console.error("Error loading workouts:", error);
-    }
-  };
-
-  const handleAddWorkout = async (workout: Workout) => {
-    try {
-      await workoutService.createWorkout(workout);
-      loadWorkouts();
-    } catch (error) {
-      console.error("Error adding workout:", error);
-    }
-  };
-
-  const handleDeleteWorkout = async (id: number) => {
-    try {
-      await workoutService.deleteWorkout(id);
-      loadWorkouts();
-    } catch (error) {
-      console.error("Error deleting workout:", error);
-    }
-  };
-
   return (
-    <View style={styles.container}>
-      <WorkoutForm onSubmit={handleAddWorkout} />
-      <WorkoutList workouts={workouts} onDelete={handleDeleteWorkout} />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.content}>
+        <Text style={styles.title}>Welcome to Workout App</Text>
+        <Text style={styles.subtitle}>
+          Track your workouts and monitor your progress
+        </Text>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#f5f5f5",
+  },
+  content: {
+    flex: 1,
+    padding: 16,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 16,
+    textAlign: "center",
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "#666",
+    textAlign: "center",
   },
 });

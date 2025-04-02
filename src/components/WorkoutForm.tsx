@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
+  Modal,
 } from "react-native";
 import { Workout } from "../types/workout";
 
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export const WorkoutForm: React.FC<Props> = ({ onSubmit }) => {
+  //   const [isModalVisible, setIsModalVisible] = useState(false);
   const [workout, setWorkout] = useState<Workout>({
     exercise: "",
     sets: 0,
@@ -23,6 +25,7 @@ export const WorkoutForm: React.FC<Props> = ({ onSubmit }) => {
   const handleSubmit = () => {
     onSubmit(workout);
     setWorkout({ exercise: "", sets: 0, reps: 0, weight: 0 });
+    // setIsModalVisible(false);
   };
 
   return (
@@ -65,7 +68,7 @@ export const WorkoutForm: React.FC<Props> = ({ onSubmit }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    flex: 1,
   },
   input: {
     borderWidth: 1,
@@ -79,9 +82,11 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     alignItems: "center",
+    marginTop: 10,
   },
   buttonText: {
     color: "white",
     fontWeight: "bold",
+    fontSize: 16,
   },
 });
