@@ -5,7 +5,15 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import { View, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -17,7 +25,7 @@ import { WorkoutForm } from "../components/WorkoutForm";
 export const WorkoutsScreen = () => {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = useMemo(() => ["50%"], []);
+  const snapPoints = useMemo(() => ["50%", "75%"], []);
 
   const loadWorkouts = async () => {
     try {
@@ -28,6 +36,22 @@ export const WorkoutsScreen = () => {
     }
   };
 
+  // Adding keyboard handling
+  useEffect(() => {
+    const keyboardWillShow = Keyboard.addListener("keyboardDidShow", () => {
+      bottomSheetRef.current?.snapToIndex(1);
+    });
+
+    const keyboardWillHide = Keyboard.addListener("keyboardDidHide", () => {
+      bottomSheetRef.current?.snapToIndex(-1);
+    });
+
+    return () => {
+      keyboardWillShow.remove();
+      keyboardWillHide.remove();
+    };
+  }, []);
+
   useEffect(() => {
     loadWorkouts();
   }, []);
@@ -37,6 +61,7 @@ export const WorkoutsScreen = () => {
       await workoutApi.create(workout);
       loadWorkouts();
       bottomSheetRef.current?.close();
+      Keyboard.dismiss();
     } catch (error) {
       console.error("Error adding workout:", error);
     }
@@ -60,21 +85,20 @@ export const WorkoutsScreen = () => {
   }, []);
 
   return (
-    <GestureHandlerRootView style={styles.container}>
+    <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.content}>
           <WorkoutList workouts={workouts} onDelete={handleDeleteWorkout} />
-
           <TouchableOpacity style={styles.fab} onPress={openBottomSheet}>
             <FontAwesome name="plus" size={24} color="white" />
           </TouchableOpacity>
-
           <BottomSheet
             ref={bottomSheetRef}
             index={-1}
             snapPoints={snapPoints}
             onChange={handleSheetChanges}
             enablePanDownToClose
+            android_keyboardInputMode="adjustResize"
             backgroundStyle={styles.bottomSheetBackground}
             handleIndicatorStyle={styles.bottomSheetIndicator}
           >
@@ -84,7 +108,7 @@ export const WorkoutsScreen = () => {
           </BottomSheet>
         </View>
       </SafeAreaView>
-    </GestureHandlerRootView>
+    </View>
   );
 };
 
@@ -92,6 +116,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
+    position: "relative",
   },
   safeArea: {
     flex: 1,
