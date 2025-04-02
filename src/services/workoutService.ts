@@ -21,6 +21,13 @@ export const workoutApi = {
     return response.data.length;
   },
 
+  getTotalWeight: async () => {
+    const response = await api.get<Workout[]>("/workouts");
+    return response.data.reduce((total, workout) => {
+      return total + workout.sets * workout.reps * workout.weight;
+    }, 0);
+  },
+
   create: async (workout: Omit<Workout, "id">) => {
     const response = await api.post<Workout>("/workouts", workout);
     return response.data;

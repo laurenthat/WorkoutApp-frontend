@@ -1,22 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { workoutApi } from "../services/workoutService";
 
 export const HomeScreen = () => {
   const [workoutCount, setWorkoutCount] = useState<number>(0);
+  const [totalWeight, setTotalWeight] = useState<number>(0);
 
-  useEffect(() => {
-    const loadWorkoutCount = async () => {
-      try {
-        const count = await workoutApi.getCount();
-        setWorkoutCount(count);
-      } catch (error) {
-        console.error("Error loading workout count:", error);
-      }
-    };
+  const loadStats = async () => {
+    try {
+      const [count, weight] = await Promise.all([
+        workoutApi.getCount(),
+        workoutApi.getTotalWeight(),
+      ]);
+      setWorkoutCount(count);
+      setTotalWeight(weight);
+    } catch (error) {
+      console.error("Error loading stats:", error);
+    }
+  };
 
-    loadWorkoutCount();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      loadStats();
+    }, [])
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -27,8 +35,19 @@ export const HomeScreen = () => {
         </Text>
         <View style={styles.statsContainer}>
           <Text style={styles.statsTitle}>Your Progress</Text>
-          <Text style={styles.statsNumber}>{workoutCount}</Text>
-          <Text style={styles.statsLabel}>Total Workouts</Text>
+          <View style={styles.statsRow}>
+            <View style={styles.statItem}>
+              <Text style={styles.statsNumber}>{workoutCount}</Text>
+              <Text style={styles.statsLabel}>Total Workouts</Text>
+            </View>
+            <View style={styles.statDivider} />
+            <View style={styles.statItem}>
+              <Text style={styles.statsNumber}>
+                {totalWeight.toLocaleString()}
+              </Text>
+              <Text style={styles.statsLabel}>kg Lifted</Text>
+            </View>
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -57,9 +76,15 @@ const styles = StyleSheet.create({
     color: "#666",
     textAlign: "center",
   },
+  statsGrid: {
+    marginTop: 48,
+    flexDirection: "row",
+    gap: 16,
+    paddingHorizontal: 16,
+  },
   statsContainer: {
     marginTop: 48,
-    alignItems: "center",
+    width: "100%",
     backgroundColor: "white",
     padding: 24,
     borderRadius: 12,
@@ -75,8 +100,22 @@ const styles = StyleSheet.create({
   statsTitle: {
     fontSize: 20,
     fontWeight: "600",
-    marginBottom: 16,
+    marginBottom: 24,
     color: "#1a1a1a",
+    textAlign: "center",
+  },
+  statsRow: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  statItem: {
+    alignItems: "center",
+  },
+  statDivider: {
+    width: 1,
+    height: "100%",
+    backgroundColor: "#E5E5E5",
   },
   statsNumber: {
     fontSize: 48,
