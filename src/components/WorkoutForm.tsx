@@ -48,6 +48,17 @@ export const WorkoutForm: React.FC<Props> = ({
     }
   };
 
+  const handleCancel = () => {
+    // Reset form when canceling
+    setWorkout({
+      exercise: "",
+      sets: 0,
+      reps: 0,
+      weight: 0,
+    });
+    onCancel?.();
+  };
+
   // Using useEffect to show the workout data in the bottom sheet when editing
   React.useEffect(() => {
     if (initialWorkout) {
@@ -92,7 +103,7 @@ export const WorkoutForm: React.FC<Props> = ({
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={[styles.button, styles.cancelButton]}
-            onPress={onCancel}
+            onPress={handleCancel}
           >
             <Text style={[styles.buttonText, styles.cancelButtonText]}>
               Cancel

@@ -5,9 +5,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  ToastAndroid,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Workout } from "../types/workout";
+import Toast from "react-native-toast-message";
 
 interface Props {
   workouts: Workout[];
@@ -28,6 +30,17 @@ export const WorkoutList: React.FC<Props> = ({
   onDelete,
   onModify,
 }) => {
+  const handleDelete = (workout: Workout) => {
+    if (workout.id) {
+      onDelete(workout.id);
+      ToastAndroid.showWithGravity(
+        `${workout.exercise} has been removed`,
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
+    }
+  };
+
   const renderItem = ({ item }: { item: Workout }) => (
     <View style={styles.item}>
       <View style={styles.contentContainer}>
@@ -62,7 +75,8 @@ export const WorkoutList: React.FC<Props> = ({
             <FontAwesome name="edit" size={20} color="#007AFF" />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => item.id && onDelete(item.id)}
+            // onPress={() => item.id && onDelete(item.id)}
+            onPress={() => handleDelete(item)}
             style={styles.iconButton}
           >
             <FontAwesome name="trash" size={20} color="#FF3B30" />
