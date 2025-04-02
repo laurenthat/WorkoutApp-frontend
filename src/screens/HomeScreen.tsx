@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { workoutApi } from "../services/workoutService";
+import { Stopwatch } from "../components/StopWatch";
+import { ProgressCard } from "../components/ProgressCard";
 
 export const HomeScreen = () => {
   const [workoutCount, setWorkoutCount] = useState<number>(0);
@@ -30,25 +32,11 @@ export const HomeScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.title}>Welcome to Workout App</Text>
-        <Text style={styles.subtitle}>
+        {/* <Text style={styles.subtitle}>
           Track your workouts and monitor your progress
-        </Text>
-        <View style={styles.statsContainer}>
-          <Text style={styles.statsTitle}>Your Progress</Text>
-          <View style={styles.statsRow}>
-            <View style={styles.statItem}>
-              <Text style={styles.statsNumber}>{workoutCount}</Text>
-              <Text style={styles.statsLabel}>Total Workouts</Text>
-            </View>
-            <View style={styles.statDivider} />
-            <View style={styles.statItem}>
-              <Text style={styles.statsNumber}>
-                {totalWeight.toLocaleString()}
-              </Text>
-              <Text style={styles.statsLabel}>kg Lifted</Text>
-            </View>
-          </View>
-        </View>
+        </Text> */}
+        <Stopwatch />
+        <ProgressCard workoutCount={workoutCount} totalWeight={totalWeight} />
       </View>
     </SafeAreaView>
   );
@@ -75,56 +63,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#666",
     textAlign: "center",
-  },
-  statsGrid: {
-    marginTop: 48,
-    flexDirection: "row",
-    gap: 16,
-    paddingHorizontal: 16,
-  },
-  statsContainer: {
-    marginTop: 48,
-    width: "100%",
-    backgroundColor: "white",
-    padding: 24,
-    borderRadius: 12,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  statsTitle: {
-    fontSize: 20,
-    fontWeight: "600",
-    marginBottom: 24,
-    color: "#1a1a1a",
-    textAlign: "center",
-  },
-  statsRow: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
-  statItem: {
-    alignItems: "center",
-  },
-  statDivider: {
-    width: 1,
-    height: "100%",
-    backgroundColor: "#E5E5E5",
-  },
-  statsNumber: {
-    fontSize: 48,
-    fontWeight: "bold",
-    color: "#007AFF",
-    marginBottom: 8,
-  },
-  statsLabel: {
-    fontSize: 16,
-    color: "#666",
   },
 });
