@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   View,
   TextInput,
   StyleSheet,
   TouchableOpacity,
   Text,
-  Modal,
 } from "react-native";
 import { Workout } from "../types/workout";
 
@@ -14,7 +13,6 @@ interface Props {
 }
 
 export const WorkoutForm: React.FC<Props> = ({ onSubmit }) => {
-  //   const [isModalVisible, setIsModalVisible] = useState(false);
   const [workout, setWorkout] = useState<Workout>({
     exercise: "",
     sets: 0,
@@ -22,10 +20,21 @@ export const WorkoutForm: React.FC<Props> = ({ onSubmit }) => {
     weight: 0,
   });
 
+  const isFormValid = useMemo(() => {
+    return (
+      //Checking if all fields are filled
+      workout.exercise.trim() !== "" &&
+      workout.sets > 0 &&
+      workout.reps > 0 &&
+      workout.weight > 0
+    );
+  }, [workout]);
+
   const handleSubmit = () => {
-    onSubmit(workout);
-    setWorkout({ exercise: "", sets: 0, reps: 0, weight: 0 });
-    // setIsModalVisible(false);
+    if (isFormValid) {
+      onSubmit(workout);
+      setWorkout({ exercise: "", sets: 0, reps: 0, weight: 0 });
+    }
   };
 
   return (
@@ -59,7 +68,11 @@ export const WorkoutForm: React.FC<Props> = ({ onSubmit }) => {
         }
         keyboardType="numeric"
       />
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+      <TouchableOpacity
+        style={[styles.button, !isFormValid && styles.buttonDisabled]}
+        onPress={handleSubmit}
+        disabled={!isFormValid}
+      >
         <Text style={styles.buttonText}>Add Workout</Text>
       </TouchableOpacity>
     </View>
@@ -83,6 +96,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
     marginTop: 10,
+  },
+  buttonDisabled: {
+    backgroundColor: "#A3A3A3",
   },
   buttonText: {
     color: "white",
