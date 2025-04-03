@@ -101,7 +101,7 @@ export const WorkoutsScreen = () => {
 
   //Bottom sheet handlers
   const handleSheetChanges = useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
+    // console.log("handleSheetChanges", index);
   }, []);
 
   // Opens the bottom sheet and resets the editing workout

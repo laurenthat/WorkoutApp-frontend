@@ -1,14 +1,8 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-  ToastAndroid,
-} from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { FlatList, ToastAndroid } from "react-native";
+import styled from "styled-components/native";
 import { Workout } from "../types/workout";
+import { WorkoutListItem } from "./WorkoutListItem";
 
 interface Props {
   workouts: Workout[];
@@ -16,13 +10,13 @@ interface Props {
   onModify?: (workout: Workout) => void;
 }
 
-//Date formatting function to display the date in a readable format
-const formatDate = (date: Date) => {
-  return new Intl.DateTimeFormat("en-US", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(date);
+const StyledFlatList = styled.FlatList`
+  flex: 1;
+  padding-top: 16px;
+` as unknown as typeof FlatList;
+
+const listContentStyle = {
+  paddingHorizontal: 16,
 };
 
 export const WorkoutList: React.FC<Props> = ({
@@ -30,7 +24,6 @@ export const WorkoutList: React.FC<Props> = ({
   onDelete,
   onModify,
 }) => {
-  // Function to handle the deletion of a workout and show a toast message
   const handleDelete = (workout: Workout) => {
     if (workout.id) {
       onDelete(workout.id);
@@ -42,124 +35,18 @@ export const WorkoutList: React.FC<Props> = ({
     }
   };
 
-  const renderItem = ({ item }: { item: Workout }) => (
-    <View style={styles.item}>
-      <View style={styles.contentContainer}>
-        <View style={styles.mainContent}>
-          <Text style={styles.exercise}>{item.exercise}</Text>
-          <View style={styles.statsContainer}>
-            <View style={styles.statItem}>
-              <Text style={styles.statLabel}>Sets</Text>
-              <Text style={styles.statValue}>{item.sets}</Text>
-            </View>
-            <View style={styles.statItem}>
-              <Text style={styles.statLabel}>Reps</Text>
-              <Text style={styles.statValue}>{item.reps}</Text>
-            </View>
-            <View style={styles.statItem}>
-              <Text style={styles.statLabel}>Weight</Text>
-              <Text style={styles.statValue}>{item.weight} Kg</Text>
-            </View>
-            <View style={styles.statItem}>
-              <Text style={styles.statLabel}>Date</Text>
-              <Text style={styles.date}>
-                {item.created_at && formatDate(new Date(item.created_at))}
-              </Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.actionsContainer}>
-          <TouchableOpacity
-            onPress={() => onModify && item.id && onModify(item)}
-            style={styles.iconButton}
-          >
-            <FontAwesome name="edit" size={20} color="#007AFF" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handleDelete(item)}
-            style={styles.iconButton}
-          >
-            <FontAwesome name="trash" size={20} color="#FF3B30" />
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
-  );
-
   return (
-    <FlatList
+    <StyledFlatList
       data={workouts}
-      renderItem={renderItem}
+      renderItem={({ item }) => (
+        <WorkoutListItem
+          workout={item}
+          onModify={onModify}
+          onDelete={handleDelete}
+        />
+      )}
       keyExtractor={(item) => item.id?.toString() || ""}
-      style={styles.list}
-      contentContainerStyle={styles.listContent}
+      contentContainerStyle={listContentStyle}
     />
   );
 };
-
-const styles = StyleSheet.create({
-  list: {
-    flex: 1,
-    paddingTop: 16,
-  },
-  listContent: {
-    paddingHorizontal: 16, // Add horizontal padding
-  },
-  item: {
-    padding: 16,
-    marginBottom: 16,
-    borderRadius: 8,
-    shadowColor: "#7f7f7f",
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-    backgroundColor: "white",
-  },
-  contentContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  mainContent: {
-    flex: 1,
-  },
-  exercise: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 12,
-  },
-  date: {
-    fontSize: 13,
-    fontWeight: "600",
-    marginBottom: 4,
-  },
-  statsContainer: {
-    flexDirection: "row",
-    gap: 24,
-  },
-  statItem: {
-    alignItems: "center",
-  },
-  statLabel: {
-    fontSize: 14,
-    color: "#666",
-    marginBottom: 4,
-  },
-  statValue: {
-    fontSize: 13,
-    fontWeight: "600",
-  },
-  actionsContainer: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    gap: 16,
-  },
-  iconButton: {
-    padding: 4,
-  },
-});
