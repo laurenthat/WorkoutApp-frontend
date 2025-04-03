@@ -26,6 +26,7 @@ export const WorkoutsScreen = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ["50%", "75%"], []);
 
+  //Fetches all workouts from the API
   const loadWorkouts = async () => {
     try {
       const data = await workoutApi.getAll();
@@ -35,7 +36,7 @@ export const WorkoutsScreen = () => {
     }
   };
 
-  // Adding keyboard handling
+  // Keyboard interaction with the bottom sheet
   useEffect(() => {
     const keyboardWillShow = Keyboard.addListener("keyboardDidShow", () => {
       bottomSheetRef.current?.snapToIndex(1);
@@ -55,6 +56,7 @@ export const WorkoutsScreen = () => {
     loadWorkouts();
   }, []);
 
+  //Add new workout
   const handleAddWorkout = async (workout: Omit<Workout, "id">) => {
     try {
       await workoutApi.create(workout);
@@ -66,11 +68,13 @@ export const WorkoutsScreen = () => {
     }
   };
 
+  //Edit existing workout
   const handleEditWorkout = (workout: Workout) => {
     setEditingWorkout(workout);
     bottomSheetRef.current?.snapToIndex(0);
   };
 
+  //Update existing workout
   const handleUpdateWorkout = async (workout: Workout) => {
     try {
       if (editingWorkout?.id) {
@@ -85,6 +89,7 @@ export const WorkoutsScreen = () => {
     }
   };
 
+  //Delete existing workout
   const handleDeleteWorkout = async (id: number) => {
     try {
       await workoutApi.delete(id);
@@ -94,15 +99,18 @@ export const WorkoutsScreen = () => {
     }
   };
 
+  //Bottom sheet handlers
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
 
+  // Opens the bottom sheet and resets the editing workout
   const openBottomSheet = useCallback(() => {
     setEditingWorkout(null);
     bottomSheetRef.current?.snapToIndex(0);
   }, []);
 
+  // Closes the bottom sheet and resets the editing workout
   const closeBottomSheet = useCallback(() => {
     bottomSheetRef.current?.close();
     setEditingWorkout(null);

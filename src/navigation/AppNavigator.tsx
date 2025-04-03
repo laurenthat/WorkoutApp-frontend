@@ -4,6 +4,7 @@ import { HomeScreen } from "../screens/HomeScreen";
 import { WorkoutsScreen } from "../screens/WorkoutsScreen";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons"; // Assuming you're using Expo
 
+//Create a bottom tab navigator
 const Tab = createBottomTabNavigator();
 
 export const AppNavigator = () => {

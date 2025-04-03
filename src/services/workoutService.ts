@@ -10,34 +10,36 @@ export const api = axios.create({
   },
 });
 
+// Workout API service
 export const workoutApi = {
+  // Fetches all workouts from the API
   getAll: async () => {
     const response = await api.get<Workout[]>("/workouts");
     return response.data;
   },
-
+  // Fetches the total number of workouts from the API
   getCount: async () => {
     const response = await api.get<Workout[]>("/workouts");
     return response.data.length;
   },
-
+  // Fetches the total weight lifted from all workouts
   getTotalWeight: async () => {
     const response = await api.get<Workout[]>("/workouts");
     return response.data.reduce((total, workout) => {
       return total + workout.sets * workout.reps * workout.weight;
     }, 0);
   },
-
+  // Creates a new workout
   create: async (workout: Omit<Workout, "id">) => {
     const response = await api.post<Workout>("/workouts", workout);
     return response.data;
   },
-
+  // Updates an existing workout
   update: async (id: number, workout: Omit<Workout, "id">) => {
     const response = await api.put<Workout>(`/workouts/${id}`, workout);
     return response.data;
   },
-
+  // Deletes a workout
   delete: async (id: number) => {
     await api.delete(`/workouts/${id}`);
   },

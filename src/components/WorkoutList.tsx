@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Workout } from "../types/workout";
-import Toast from "react-native-toast-message";
 
 interface Props {
   workouts: Workout[];
@@ -17,6 +16,7 @@ interface Props {
   onModify?: (workout: Workout) => void;
 }
 
+//Date formatting function to display the date in a readable format
 const formatDate = (date: Date) => {
   return new Intl.DateTimeFormat("en-US", {
     day: "numeric",
@@ -30,6 +30,7 @@ export const WorkoutList: React.FC<Props> = ({
   onDelete,
   onModify,
 }) => {
+  // Function to handle the deletion of a workout and show a toast message
   const handleDelete = (workout: Workout) => {
     if (workout.id) {
       onDelete(workout.id);
@@ -75,7 +76,6 @@ export const WorkoutList: React.FC<Props> = ({
             <FontAwesome name="edit" size={20} color="#007AFF" />
           </TouchableOpacity>
           <TouchableOpacity
-            // onPress={() => item.id && onDelete(item.id)}
             onPress={() => handleDelete(item)}
             style={styles.iconButton}
           >

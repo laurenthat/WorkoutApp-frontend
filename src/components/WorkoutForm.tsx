@@ -14,6 +14,7 @@ interface Props {
   onCancel?: () => void;
 }
 
+// Handles the form for adding and editing workouts
 export const WorkoutForm: React.FC<Props> = ({
   onSubmit,
   initialWorkout = null,

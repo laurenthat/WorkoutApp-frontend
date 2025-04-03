@@ -9,6 +9,7 @@ export const HomeScreen = () => {
   const [workoutCount, setWorkoutCount] = useState<number>(0);
   const [totalWeight, setTotalWeight] = useState<number>(0);
 
+  // Fetches the total number of workouts and total weight lifted from the API
   const loadStats = async () => {
     try {
       const [count, weight] = await Promise.all([
@@ -22,6 +23,7 @@ export const HomeScreen = () => {
     }
   };
 
+  // Update stats when the screen is focused
   useFocusEffect(
     React.useCallback(() => {
       loadStats();
@@ -32,9 +34,6 @@ export const HomeScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.title}>Welcome to Workout App</Text>
-        {/* <Text style={styles.subtitle}>
-          Track your workouts and monitor your progress
-        </Text> */}
         <Stopwatch />
         <ProgressCard workoutCount={workoutCount} totalWeight={totalWeight} />
       </View>

@@ -12,13 +12,6 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
-        {/* <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ title: "Workout Logger" }}
-        />
-      </Stack.Navigator> */}
         <AppNavigator />
       </NavigationContainer>
       <Toast />
