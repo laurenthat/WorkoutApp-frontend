@@ -37,20 +37,29 @@ A React Native mobile application for tracking workouts, built with Expo and Typ
 ```bash
 git clone <repository-url>
 cd WorkoutApp-frontend
+```
 
 2. Install dependencies:
+
+```bash
 npm install
+```
 
 3. Install Expo CLI globally, if not already installed:
+
+```bash
 npm install -g expo-cli
+```
 
 4. Update the API URL in the services to match your backend server address.
 
 ## Running the Application
 
 Start the server:
-npm start
 
+```bash
+npm start
+```
 
 ## Project Structure
 
@@ -74,7 +83,5 @@ WorkoutApp-frontend/
 │ └── workout.ts
 ├── App.tsx
 └── package.json
-
-```
 
 ```
