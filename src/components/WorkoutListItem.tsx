@@ -1,7 +1,7 @@
-import React from "react";
-import { FontAwesome } from "@expo/vector-icons";
-import { Workout } from "../types/workout";
-import styled from "styled-components/native";
+import React from 'react';
+import { FontAwesome } from '@expo/vector-icons';
+import { Workout } from '../types/workout';
+import styled from 'styled-components/native';
 
 interface WorkoutListItemProps {
   workout: Workout;
@@ -71,10 +71,10 @@ const IconButton = styled.TouchableOpacity`
 
 //Date formatting function to display the date in a readable format
 const formatDate = (date: Date) => {
-  return new Intl.DateTimeFormat("en-US", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+  return new Intl.DateTimeFormat('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   }).format(date);
 };
 

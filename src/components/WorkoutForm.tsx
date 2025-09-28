@@ -1,12 +1,12 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo } from 'react';
 import {
   View,
   TextInput,
   StyleSheet,
   TouchableOpacity,
   Text,
-} from "react-native";
-import { Workout } from "../types/workout";
+} from 'react-native';
+import { Workout } from '../types/workout';
 
 interface Props {
   onSubmit: (workout: Workout) => void;
@@ -25,7 +25,7 @@ export const WorkoutForm: React.FC<Props> = ({
       return { ...initialWorkout };
     }
     return {
-      exercise: "",
+      exercise: '',
       sets: 0,
       reps: 0,
       weight: 0,
@@ -35,7 +35,7 @@ export const WorkoutForm: React.FC<Props> = ({
   const isFormValid = useMemo(() => {
     return (
       //Checking if all fields are filled
-      workout.exercise.trim() !== "" &&
+      workout.exercise.trim() !== '' &&
       workout.sets > 0 &&
       workout.reps > 0 &&
       workout.weight > 0
@@ -45,14 +45,14 @@ export const WorkoutForm: React.FC<Props> = ({
   const handleSubmit = () => {
     if (isFormValid) {
       onSubmit(workout);
-      setWorkout({ exercise: "", sets: 0, reps: 0, weight: 0 });
+      setWorkout({ exercise: '', sets: 0, reps: 0, weight: 0 });
     }
   };
 
   const handleCancel = () => {
     // Reset form when canceling
     setWorkout({
-      exercise: "",
+      exercise: '',
       sets: 0,
       reps: 0,
       weight: 0,
@@ -73,29 +73,27 @@ export const WorkoutForm: React.FC<Props> = ({
         style={styles.input}
         placeholder="Exercise"
         value={workout.exercise}
-        onChangeText={(text) => setWorkout({ ...workout, exercise: text })}
+        onChangeText={text => setWorkout({ ...workout, exercise: text })}
       />
       <TextInput
         style={styles.input}
         placeholder="Sets"
-        value={workout.sets === 0 ? "" : workout.sets.toString()}
-        onChangeText={(text) => setWorkout({ ...workout, sets: Number(text) })}
+        value={workout.sets === 0 ? '' : workout.sets.toString()}
+        onChangeText={text => setWorkout({ ...workout, sets: Number(text) })}
         keyboardType="numeric"
       />
       <TextInput
         style={styles.input}
         placeholder="Reps"
-        value={workout.reps === 0 ? "" : workout.reps.toString()}
-        onChangeText={(text) => setWorkout({ ...workout, reps: Number(text) })}
+        value={workout.reps === 0 ? '' : workout.reps.toString()}
+        onChangeText={text => setWorkout({ ...workout, reps: Number(text) })}
         keyboardType="numeric"
       />
       <TextInput
         style={styles.input}
         placeholder="Weight (kg)"
-        value={workout.weight === 0 ? "" : workout.weight.toString()}
-        onChangeText={(text) =>
-          setWorkout({ ...workout, weight: Number(text) })
-        }
+        value={workout.weight === 0 ? '' : workout.weight.toString()}
+        onChangeText={text => setWorkout({ ...workout, weight: Number(text) })}
         keyboardType="numeric"
       />
 
@@ -142,28 +140,28 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: '#ddd',
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
   },
   button: {
-    backgroundColor: "#007AFF",
+    backgroundColor: '#007AFF',
     padding: 15,
     borderRadius: 5,
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 10,
   },
   buttonDisabled: {
-    backgroundColor: "#A3A3A3",
+    backgroundColor: '#A3A3A3',
   },
   buttonText: {
-    color: "white",
-    fontWeight: "bold",
+    color: 'white',
+    fontWeight: 'bold',
     fontSize: 16,
   },
   buttonContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 10,
     marginTop: 10,
   },
@@ -172,11 +170,11 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderWidth: 1,
-    borderColor: "#007AFF",
+    borderColor: '#007AFF',
   },
   cancelButtonText: {
-    color: "#007AFF",
+    color: '#007AFF',
   },
 });

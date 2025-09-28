@@ -1,8 +1,8 @@
-import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { HomeScreen } from "../screens/HomeScreen";
-import { WorkoutsScreen } from "../screens/WorkoutsScreen";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons"; // Assuming you're using Expo
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { HomeScreen } from '../screens/HomeScreen';
+import { WorkoutsScreen } from '../screens/WorkoutsScreen';
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons'; // Assuming you're using Expo
 
 //Create a bottom tab navigator
 const Tab = createBottomTabNavigator();
@@ -11,8 +11,8 @@ export const AppNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: "#007AFF",
-        tabBarInactiveTintColor: "gray",
+        tabBarActiveTintColor: '#007AFF',
+        tabBarInactiveTintColor: 'gray',
         headerShown: false,
       }}
     >

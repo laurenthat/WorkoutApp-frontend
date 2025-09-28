@@ -4,17 +4,17 @@ if (typeof document === 'undefined') {
     head: {
       appendChild: () => {},
       insertBefore: () => {},
-      removeChild: () => {}
+      removeChild: () => {},
     },
     createElement: () => ({
       setAttribute: () => {},
       style: {},
       appendChild: () => {},
-      removeChild: () => {}
+      removeChild: () => {},
     }),
     createTextNode: () => ({}),
     querySelector: () => null,
-    querySelectorAll: () => []
+    querySelectorAll: () => [],
   };
 }
 
@@ -32,7 +32,7 @@ if (typeof location === 'undefined') {
     port: '',
     pathname: '/',
     search: '',
-    hash: ''
+    hash: '',
   };
 }
 
@@ -45,6 +45,6 @@ if (global.window && !global.window.location) {
 if (typeof navigator === 'undefined') {
   global.navigator = {
     userAgent: 'React Native',
-    platform: 'React Native'
+    platform: 'React Native',
   };
 }

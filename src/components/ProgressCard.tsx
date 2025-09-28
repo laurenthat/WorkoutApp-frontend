@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
 interface Props {
   workoutCount: number;
@@ -31,11 +31,11 @@ export const ProgressCard: React.FC<Props> = ({
 const styles = StyleSheet.create({
   container: {
     marginTop: 48,
-    width: "100%",
-    backgroundColor: "white",
+    width: '100%',
+    backgroundColor: 'white',
     padding: 24,
     borderRadius: 12,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -46,32 +46,32 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "600",
+    fontWeight: '600',
     marginBottom: 24,
-    color: "#1a1a1a",
-    textAlign: "center",
+    color: '#1a1a1a',
+    textAlign: 'center',
   },
   row: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   statItem: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   divider: {
     width: 1,
-    height: "100%",
-    backgroundColor: "#E5E5E5",
+    height: '100%',
+    backgroundColor: '#E5E5E5',
   },
   number: {
     fontSize: 48,
-    fontWeight: "bold",
-    color: "#007AFF",
+    fontWeight: 'bold',
+    color: '#007AFF',
     marginBottom: 8,
   },
   label: {
     fontSize: 16,
-    color: "#666",
+    color: '#666',
   },
 });

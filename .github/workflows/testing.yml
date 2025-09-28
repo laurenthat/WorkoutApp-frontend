@@ -1,0 +1,40 @@
+name: Testing Branch CI
+
+# This workflow runs on the testing branch for development
+on:
+  push:
+    branches: [ testing ]
+  pull_request:
+    branches: [ testing ]
+
+jobs:
+  test:
+    name: 🧪 Run Tests on Testing Branch
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📂 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: 🔧 Install dependencies
+      run: npm ci
+      
+    - name: 🎨 Run ESLint
+      run: npm run lint
+      
+    - name: 📝 Check TypeScript
+      run: npm run type-check
+      
+    - name: ✅ Run unit tests
+      run: npm test
+      
+    - name: 🎉 Success message
+      run: |
+        echo "✅ All checks passed on testing branch!"
+        echo "🚀 Ready to create pull request to main!"
