@@ -61,27 +61,128 @@ Start the server:
 npm start
 ```
 
+## Development Scripts
+
+```bash
+# Run linter
+npm run lint
+npm run lint:fix          # Auto-fix linting issues
+
+# Code formatting
+npm run format             # Format all files
+npm run format:check      # Check if files are formatted
+
+# Testing
+npm test                  # Run unit tests
+npm run test:watch        # Run tests in watch mode
+npm run test:coverage     # Run tests with coverage report
+
+# Type checking
+npm run type-check        # Run TypeScript compiler check
+```
+
+## Testing
+
+This project uses **Jest** and **React Native Testing Library** for unit testing.
+
+### Running Tests
+- `npm test` - Run all tests once
+- `npm run test:watch` - Run tests in watch mode (re-runs on file changes)
+- `npm run test:coverage` - Generate coverage reports
+
+### Test Coverage
+Current coverage: **ProgressCard component: 100%**
+
+Test files are located in `src/components/__tests__/` and follow the naming pattern `*.test.tsx`.
+
+## Code Quality
+
+### Linting & Formatting
+- **ESLint** with TypeScript, React, and React Native plugins
+- **Prettier** for consistent code formatting
+- **Automatic formatting** on save (if configured in your editor)
+
+### Pre-commit Checks
+The project enforces code quality through:
+- Linting checks (ESLint)
+- Type checking (TypeScript)
+- Unit test execution
+- Code formatting (Prettier)
+
+## CI/CD Pipeline
+
+This project uses **GitHub Actions** for continuous integration:
+
+### Automated Checks
+Every pull request triggers:
+- ✅ **Linting** (ESLint)
+- ✅ **Type checking** (TypeScript)
+- ✅ **Unit tests** (Jest)
+- ✅ **Code formatting** (Prettier)
+
+### Branch Protection
+The `main` branch is protected and requires:
+- All status checks to pass
+- Pull request reviews
+- Up-to-date branches before merging
+
+### 🛡️ Setting Up Branch Protection Rules
+
+To enable branch protection that prevents merging when tests fail:
+
+1. **Go to Repository Settings**
+   - Navigate to: `https://github.com/laurenthat/WorkoutApp-frontend`
+   - Click **Settings** tab → **Branches**
+
+2. **Add Branch Protection Rule**
+   - Click **Add rule**
+   - Branch name pattern: `main`
+
+3. **Configure Protection Settings**
+   - ✅ **Require status checks to pass before merging**
+   - ✅ **Require branches to be up to date before merging**
+   - ✅ **Require pull request reviews** (1 reviewer minimum)
+   - ✅ **Dismiss stale PR approvals** when new commits are pushed
+
+4. **Required Status Checks**
+   Add these required checks:
+   - `test-and-lint`
+   - `quality-gate`
+
+### 🧪 Testing the Pipeline
+1. Make a change that breaks linting
+2. Push to a feature branch
+3. Create PR to main - pipeline should fail ❌
+4. Fix the issue - pipeline should pass ✅
+
 ## Project Structure
 
 ```
-
 WorkoutApp-frontend/
+├── .github/
+│   └── workflows/
+│       └── ci.yml                 # CI/CD pipeline
 ├── src/
-│ ├── components/
-│ │ ├── ProgressCard.tsx
-│ │ ├── StopWatch.tsx
-│ │ ├── WorkoutForm.tsx
-│ │ └── WorkoutList.tsx
-│ ├── navigation/
-│ │ └── AppNavigator.tsx
-│ ├── screens/
-│ │ ├── HomeScreen.tsx
-│ │ └── WorkoutsScreen.tsx
-│ ├── services/
-│ │ └── workoutService.ts
-│ └── types/
-│ └── workout.ts
+│   ├── components/
+│   │   ├── __tests__/
+│   │   │   └── ProgressCard.test.tsx
+│   │   ├── ProgressCard.tsx
+│   │   ├── StopWatch.tsx
+│   │   ├── WorkoutForm.tsx
+│   │   └── WorkoutList.tsx
+│   ├── navigation/
+│   │   └── AppNavigator.tsx
+│   ├── screens/
+│   │   ├── HomeScreen.tsx
+│   │   └── WorkoutsScreen.tsx
+│   ├── services/
+│   │   └── workoutService.ts
+│   └── types/
+│       └── workout.ts
 ├── App.tsx
+├── jest.config.json              # Jest configuration
+├── jest-setup.js                 # Test environment setup
+├── eslint.config.js              # ESLint configuration
+├── .prettierrc.json              # Prettier configuration
 └── package.json
-
 ```
