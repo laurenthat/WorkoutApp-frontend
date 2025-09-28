@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
-import { workoutApi } from "../services/workoutService";
-import { Stopwatch } from "../components/StopWatch";
-import { ProgressCard } from "../components/ProgressCard";
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { workoutApi } from '../services/workoutService';
+import { Stopwatch } from '../components/StopWatch';
+import { ProgressCard } from '../components/ProgressCard';
 
 export const HomeScreen = () => {
   const [workoutCount, setWorkoutCount] = useState<number>(0);
@@ -19,7 +19,7 @@ export const HomeScreen = () => {
       setWorkoutCount(count);
       setTotalWeight(weight);
     } catch (error) {
-      console.error("Error loading stats:", error);
+      console.error('Error loading stats:', error);
     }
   };
 
@@ -44,23 +44,18 @@ export const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: '#f5f5f5',
   },
   content: {
     flex: 1,
     padding: 16,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 16,
-    textAlign: "center",
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#666",
-    textAlign: "center",
+    textAlign: 'center',
   },
 });

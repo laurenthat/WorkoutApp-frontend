@@ -1,21 +1,21 @@
 /// <reference types="react-native" />
 
-declare module "*.png" {
-  const value: any;
+declare module '*.png' {
+  const value: number;
   export default value;
 }
 
-declare module "*.jpg" {
-  const value: any;
+declare module '*.jpg' {
+  const value: number;
   export default value;
 }
 
-declare module "*.jpeg" {
-  const value: any;
+declare module '*.jpeg' {
+  const value: number;
   export default value;
 }
 
-declare module "*.gif" {
-  const value: any;
+declare module '*.gif' {
+  const value: number;
   export default value;
 }

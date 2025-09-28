@@ -4,7 +4,7 @@ import React, {
   useRef,
   useCallback,
   useMemo,
-} from "react";
+} from 'react';
 import {
   View,
   Text,
@@ -12,19 +12,19 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Keyboard,
-} from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
-import { workoutApi } from "../services/workoutService";
-import { Workout } from "../types/workout";
-import { WorkoutList } from "../components/WorkoutList";
-import { WorkoutForm } from "../components/WorkoutForm";
+} from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import { workoutApi } from '../services/workoutService';
+import { Workout } from '../types/workout';
+import { WorkoutList } from '../components/WorkoutList';
+import { WorkoutForm } from '../components/WorkoutForm';
 
 export const WorkoutsScreen = () => {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [editingWorkout, setEditingWorkout] = useState<Workout | null>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = useMemo(() => ["50%", "75%"], []);
+  const snapPoints = useMemo(() => ['50%', '75%'], []);
 
   //Fetches all workouts from the API
   const loadWorkouts = async () => {
@@ -32,17 +32,17 @@ export const WorkoutsScreen = () => {
       const data = await workoutApi.getAll();
       setWorkouts(data);
     } catch (error) {
-      console.error("Error loading workouts:", error);
+      console.error('Error loading workouts:', error);
     }
   };
 
   // Keyboard interaction with the bottom sheet
   useEffect(() => {
-    const keyboardWillShow = Keyboard.addListener("keyboardDidShow", () => {
+    const keyboardWillShow = Keyboard.addListener('keyboardDidShow', () => {
       bottomSheetRef.current?.snapToIndex(1);
     });
 
-    const keyboardWillHide = Keyboard.addListener("keyboardDidHide", () => {
+    const keyboardWillHide = Keyboard.addListener('keyboardDidHide', () => {
       bottomSheetRef.current?.snapToIndex(-1);
     });
 
@@ -57,14 +57,14 @@ export const WorkoutsScreen = () => {
   }, []);
 
   //Add new workout
-  const handleAddWorkout = async (workout: Omit<Workout, "id">) => {
+  const handleAddWorkout = async (workout: Omit<Workout, 'id'>) => {
     try {
       await workoutApi.create(workout);
       loadWorkouts();
       bottomSheetRef.current?.close();
       Keyboard.dismiss();
     } catch (error) {
-      console.error("Error adding workout:", error);
+      console.error('Error adding workout:', error);
     }
   };
 
@@ -85,7 +85,7 @@ export const WorkoutsScreen = () => {
         Keyboard.dismiss();
       }
     } catch (error) {
-      console.error("Error updating workout:", error);
+      console.error('Error updating workout:', error);
     }
   };
 
@@ -95,13 +95,13 @@ export const WorkoutsScreen = () => {
       await workoutApi.delete(id);
       loadWorkouts();
     } catch (error) {
-      console.error("Error deleting workout:", error);
+      console.error('Error deleting workout:', error);
     }
   };
 
   //Bottom sheet handlers
-  const handleSheetChanges = useCallback((index: number) => {
-    // console.log("handleSheetChanges", index);
+  const handleSheetChanges = useCallback(() => {
+    // Handle sheet changes if needed
   }, []);
 
   // Opens the bottom sheet and resets the editing workout
@@ -158,8 +158,8 @@ export const WorkoutsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
-    position: "relative",
+    backgroundColor: '#f5f5f5',
+    position: 'relative',
   },
   safeArea: {
     flex: 1,
@@ -167,34 +167,34 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 16,
     paddingHorizontal: 16,
-    color: "#1a1a1a",
+    color: '#1a1a1a',
   },
   content: {
     flex: 1,
-    position: "relative",
+    position: 'relative',
     paddingTop: 16,
   },
   fab: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 20,
     right: 20,
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: "#007AFF",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: '#007AFF',
+    justifyContent: 'center',
+    alignItems: 'center',
     elevation: 4,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
   bottomSheetBackground: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
   },
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   bottomSheetIndicator: {
-    backgroundColor: "#A3A3A3",
+    backgroundColor: '#A3A3A3',
     width: 40,
   },
 });

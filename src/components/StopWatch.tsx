@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 export const Stopwatch = () => {
   const [isRunning, setIsRunning] = useState(false);
@@ -9,7 +9,7 @@ export const Stopwatch = () => {
     let intervalId: ReturnType<typeof setInterval>;
     if (isRunning) {
       intervalId = setInterval(() => {
-        setTime((prevTime) => prevTime + 1);
+        setTime(prevTime => prevTime + 1);
       }, 1000);
     }
     return () => clearInterval(intervalId);
@@ -20,9 +20,9 @@ export const Stopwatch = () => {
     const minutes = Math.floor((timeInSeconds % 3600) / 60);
     const seconds = timeInSeconds % 60;
 
-    return `${hours.toString().padStart(2, "0")}:${minutes
+    return `${hours.toString().padStart(2, '0')}:${minutes
       .toString()
-      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+      .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
   const handleStartStop = () => {
@@ -46,7 +46,7 @@ export const Stopwatch = () => {
           ]}
           onPress={handleStartStop}
         >
-          <Text style={styles.buttonText}>{isRunning ? "Stop" : "Start"}</Text>
+          <Text style={styles.buttonText}>{isRunning ? 'Stop' : 'Start'}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, styles.resetButton]}
@@ -61,12 +61,12 @@ export const Stopwatch = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    backgroundColor: "white",
+    width: '100%',
+    backgroundColor: 'white',
     padding: 24,
     borderRadius: 12,
     marginTop: 24,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -74,22 +74,22 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
     elevation: 5,
-    alignItems: "center",
+    alignItems: 'center',
   },
   title: {
     fontSize: 20,
-    fontWeight: "600",
+    fontWeight: '600',
     marginBottom: 16,
-    color: "#1a1a1a",
+    color: '#1a1a1a',
   },
   time: {
     fontSize: 48,
-    fontWeight: "bold",
-    color: "#007AFF",
+    fontWeight: 'bold',
+    color: '#007AFF',
     marginBottom: 24,
   },
   buttonContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 16,
   },
   button: {
@@ -97,20 +97,20 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     minWidth: 100,
-    alignItems: "center",
+    alignItems: 'center',
   },
   startButton: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: '#4CAF50',
   },
   stopButton: {
-    backgroundColor: "#F44336",
+    backgroundColor: '#F44336',
   },
   resetButton: {
-    backgroundColor: "#607D8B",
+    backgroundColor: '#607D8B',
   },
   buttonText: {
-    color: "white",
+    color: 'white',
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: '600',
   },
 });

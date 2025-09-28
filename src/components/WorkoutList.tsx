@@ -1,8 +1,9 @@
-import React from "react";
-import { FlatList, ToastAndroid } from "react-native";
-import styled from "styled-components/native";
-import { Workout } from "../types/workout";
-import { WorkoutListItem } from "./WorkoutListItem";
+import React from 'react';
+// eslint-disable-next-line react-native/split-platform-components
+import { FlatList, Platform, ToastAndroid, Alert } from 'react-native';
+import styled from 'styled-components/native';
+import { Workout } from '../types/workout';
+import { WorkoutListItem } from './WorkoutListItem';
 
 interface Props {
   workouts: Workout[];
@@ -27,11 +28,15 @@ export const WorkoutList: React.FC<Props> = ({
   const handleDelete = (workout: Workout) => {
     if (workout.id) {
       onDelete(workout.id);
-      ToastAndroid.showWithGravity(
-        `${workout.exercise} has been removed`,
-        ToastAndroid.SHORT,
-        ToastAndroid.BOTTOM
-      );
+      if (Platform.OS === 'android') {
+        ToastAndroid.showWithGravity(
+          `${workout.exercise} has been removed`,
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        );
+      } else {
+        Alert.alert('Success', `${workout.exercise} has been removed`);
+      }
     }
   };
 
@@ -45,7 +50,7 @@ export const WorkoutList: React.FC<Props> = ({
           onDelete={handleDelete}
         />
       )}
-      keyExtractor={(item) => item.id?.toString() || ""}
+      keyExtractor={item => item.id?.toString() || ''}
       contentContainerStyle={listContentStyle}
     />
   );
