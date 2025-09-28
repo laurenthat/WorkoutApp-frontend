@@ -1,4 +1,4 @@
-// CI/CD Pipeline Test - Intentional Error for Testing
+// CI/CD Pipeline Test - Fixed and Ready for Production
 export interface Workout {
   id?: number;
   exercise: string;
@@ -6,6 +6,4 @@ export interface Workout {
   reps: number;
   weight: number;
   created_at?: Date;
-  // This will cause a TypeScript error - missing semicolon and invalid syntax
-  invalidProperty: ThisTypeDoesNotExist
 }
