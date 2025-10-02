@@ -12,7 +12,7 @@ describe('ProgressCard Component', () => {
     expect(getByText('5')).toBeTruthy();
     expect(getByText('250')).toBeTruthy();
     expect(getByText('Total Workouts')).toBeTruthy();
-    expect(getByText('kg Lifted')).toBeTruthy();
+      expect(getByText("kg Lifted")).toBeTruthy();
   });
 
   it('renders with zero values', () => {
