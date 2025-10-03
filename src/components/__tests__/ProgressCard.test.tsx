@@ -3,7 +3,7 @@ import { render } from '@testing-library/react-native';
 import { ProgressCard } from '../ProgressCard';
 
 describe('ProgressCard Component', () => {
-  it('renders correctly with workout count and total weight', () => {
+  it("renders correctly with workout count and total weight", () => {
     const { getByText } = render(
       <ProgressCard workoutCount={5} totalWeight={250} />
     );

@@ -2,18 +2,20 @@
 if (typeof document === 'undefined') {
   global.document = {
     head: {
+      // Fake DOM
       appendChild: () => {},
       insertBefore: () => {},
       removeChild: () => {},
     },
     createElement: () => ({
+      // Fake element creation
       setAttribute: () => {},
       style: {},
       appendChild: () => {},
       removeChild: () => {},
     }),
     createTextNode: () => ({}),
-    querySelector: () => null,
+    querySelector: () => null, // Fake DOM queries
     querySelectorAll: () => [],
   };
 }
@@ -24,7 +26,7 @@ if (typeof window === 'undefined') {
 
 if (typeof location === 'undefined') {
   global.location = {
-    href: 'https://localhost',
+    href: 'https://localhost', //Fake URL properties
     origin: 'https://localhost',
     protocol: 'https:',
     host: 'localhost',
