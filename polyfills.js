@@ -1,12 +1,14 @@
 // React Native polyfill for styled-components and other web APIs
 if (typeof document === 'undefined') {
   global.document = {
-    head: { // Fake DOM 
+    head: {
+      // Fake DOM
       appendChild: () => {},
       insertBefore: () => {},
       removeChild: () => {},
     },
-    createElement: () => ({ // Fake element creation
+    createElement: () => ({
+      // Fake element creation
       setAttribute: () => {},
       style: {},
       appendChild: () => {},

@@ -86,11 +86,13 @@ npm run type-check        # Run TypeScript compiler check
 This project uses **Jest** and **React Native Testing Library** for unit testing.
 
 ### Running Tests
+
 - `npm test` - Run all tests once
 - `npm run test:watch` - Run tests in watch mode (re-runs on file changes)
 - `npm run test:coverage` - Generate coverage reports
 
 ### Test Coverage
+
 Current coverage: **ProgressCard component: 100%**
 
 Test files are located in `src/components/__tests__/` and follow the naming pattern `*.test.tsx`.
@@ -98,12 +100,15 @@ Test files are located in `src/components/__tests__/` and follow the naming patt
 ## Code Quality
 
 ### Linting & Formatting
+
 - **ESLint** with TypeScript, React, and React Native plugins
 - **Prettier** for consistent code formatting
 - **Automatic formatting** on save (if configured in your editor)
 
 ### Pre-commit Checks
+
 The project enforces code quality through:
+
 - Linting checks (ESLint)
 - Type checking (TypeScript)
 - Unit test execution
@@ -114,14 +119,18 @@ The project enforces code quality through:
 This project uses **GitHub Actions** for continuous integration:
 
 ### Automated Checks
+
 Every pull request triggers:
+
 - ✅ **Linting** (ESLint)
 - ✅ **Type checking** (TypeScript)
 - ✅ **Unit tests** (Jest)
 - ✅ **Code formatting** (Prettier)
 
 ### Branch Protection
+
 The `main` branch is protected and requires:
+
 - All status checks to pass
 - Pull request reviews
 - Up-to-date branches before merging
@@ -150,6 +159,7 @@ To enable branch protection that prevents merging when tests fail:
    - `quality-gate`
 
 ### 🧪 Testing the Pipeline
+
 1. Make a change that breaks linting
 2. Push to a feature branch
 3. Create PR to main - pipeline should fail ❌
